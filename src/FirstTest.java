@@ -36,9 +36,8 @@ public class FirstTest {
     public void firstTest() {
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
-        WebElement element_to_init_search = driver.findElementByXPath("//*[contains(@text,'Search Wikipedia')]");
-        element_to_init_search.click();
 
-        WebElement element_to_search_line = driver.findElementByXPath("");
+        WebElement element_to_init_search = driver.findElementByXPath("//*[contains(@text,'Search Wikipedia')]");
+        element_to_init_search.sendKeys("Appium");
     }
 }
