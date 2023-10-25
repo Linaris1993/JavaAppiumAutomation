@@ -4,13 +4,18 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.awt.font.TextAttribute;
 import java.net.URL;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import javax.xml.stream.events.Attribute;
 
 
 public class FirstTest {
@@ -100,7 +105,7 @@ public class FirstTest {
         waitForElementNotPresent(
                 By.id("org.wikipedia:id/search_close_btn"),
                 "X is still present on the page",
-                        5
+                5
         );
     }
 
@@ -141,6 +146,28 @@ public class FirstTest {
                 article_title
         );
     }
+
+    @Test
+public void testToAssertElementHasText() {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        WebElement ElementHasText = assertElementHasText(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]") ,
+                "Couldn't find an element",
+                10
+        );
+
+    }
+    private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds)
+    {
+        WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+        wait.until(ExpectedConditions.textToBePresentInElement(by,"Search Wikipedia"));
+        return wait.until(
+                ExpectedConditions.presenceOfElementLocated(by)
+    );
+    }
+
     private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -150,10 +177,11 @@ public class FirstTest {
         );
     }
 
-    private WebElement waitForElementPresent(By by, String error_message)
-    {
-       return waitForElementPresent(by, error_message, 5);
-    }
+//    private WebElement waitForElementPresent(By by, String error_message)
+//    {
+//       return waitForElementPresent(by, error_message, 5);
+//    }
+
     private WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds)
     {
        WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
