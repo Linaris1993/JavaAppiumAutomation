@@ -159,6 +159,51 @@ public void testToAssertElementHasText() {
         );
 
     }
+
+    @Test
+    public void testCancelSearchResult() {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_container"),
+                "Cannot find 'Search Wikipedia' input",
+                5
+        );
+
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "apple",
+                "Cannot find any article for 'apple'",
+                10
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@class='android.view.ViewGroup']//*[contains(@text, 'Apple')]"),
+                "Cannot find any article associated with 'apple'",
+                15
+        );
+
+        assertElementLengthIsGreaterThan1(
+                By.xpath("//*[@class='android.view.ViewGroup']//*[contains(@text, 'Apple')]"),
+                "Cannot find any article associated with 'apple'",
+                15
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find X Cancel search input",
+                10
+        );
+
+        waitForElementNotPresent(
+                By.xpath("//*[@class='android.view.ViewGroup']//*[contains(@text, 'Apple')]"),
+                "Search result is still displayed",
+                10
+        );
+
+
+    }
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -168,13 +213,20 @@ public void testToAssertElementHasText() {
     );
     }
 
-    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds)
-    {
+    private WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
         return wait.until(
                 ExpectedConditions.presenceOfElementLocated(by)
         );
+    }
+        private WebElement assertElementLengthIsGreaterThan1(By by, String error_message, long timeoutInSeconds)
+        {
+            WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
+            wait.until(ExpectedConditions.numberOfElementsToBeMoreThan(by, 1));
+            return wait.until(
+                    ExpectedConditions.presenceOfElementLocated(by)
+            );
     }
 
 //    private WebElement waitForElementPresent(By by, String error_message)
