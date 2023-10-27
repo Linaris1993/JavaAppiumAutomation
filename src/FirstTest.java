@@ -1,14 +1,17 @@
 import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.TouchAction;
 import io.appium.java_client.android.AndroidDriver;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.net.URL;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.DesiredCapabilities;
@@ -72,7 +75,6 @@ public class FirstTest {
         );
     }
     @Test
-
     public void testCancelSearch() {
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
@@ -202,6 +204,43 @@ public void testToAssertElementHasText() {
                 10
         );
 
+    }
+
+    @Test
+    public void testSwipeArticle()
+    {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Java",
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                15
+
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                15
+        );
+        waitForElementPresent(
+                By.xpath("//android.view.View[@content-desc='Java (programming language)']"),
+                "Cannot find Java article",
+                15
+        );
+
+        swipeUp(2000);
+        swipeUp(2000);
+        swipeUp(2000);
+        swipeUp(2000);
+        swipeUp(2000);
 
     }
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds)
@@ -255,11 +294,20 @@ public void testToAssertElementHasText() {
                 ExpectedConditions.invisibilityOfElementLocated(by)
         );
     }
-private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds)
+    private WebElement waitForElementAndClear(By by, String error_message, long timeoutInSeconds)
     {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.clear();
         return element;
+    }
+    protected void swipeUp(int timeOfSwipe)
+    {
+        TouchAction action = new TouchAction(driver);
+        Dimension size = driver.manage().window().getSize();
+        int x = size.width / 2;
+        int start_y = (int) (size.height * 0.8);
+        int end_y = (int) (size.height * 0.2);
+        action.press(x, start_y).waitAction(timeOfSwipe).moveTo(x, end_y).release().perform();
     }
 
 }
