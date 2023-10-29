@@ -219,6 +219,45 @@ public void testToAssertElementHasText() {
         );
         waitForElementAndSendKeys(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Appium",
+                "Cannot find 'Appium' topic searching by 'Java'",
+                15
+
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Automation for Apps']"),
+                "Cannot find 'Automation for Apps' topic searching by 'Appium'",
+                15
+        );
+        waitForElementPresent(
+                By.id("pcs-edit-section-title-description"),
+                "Cannot find Appium article",
+                15
+        );
+
+        swipeUp(2000);
+
+        swipeUpToFindElement(
+                By.xpath("//android.view.View[@content-desc='View article in browser']"),
+                "Cannot find the end of the article",
+                20
+        );
+    }
+
+    @Test
+    public void SaveFirstArticleToMyList()
+    {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
@@ -235,14 +274,23 @@ public void testToAssertElementHasText() {
                 "Cannot find Java article",
                 15
         );
-
-        swipeUp(2000);
-        swipeUp(2000);
-        swipeUp(2000);
-        swipeUp(2000);
-        swipeUp(2000);
-
+        waitForElementPresent(
+                By.id("org.wikipedia:id/page_toolbar_button_show_overflow_menu"),
+                "Cannot find btn to open article options",
+                5
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/page_save"),
+                "Cannot find save btn",
+                10
+        );
+                waitForElementPresent(
+                 By.xpath("//*[@text ='Add to list']"),
+                        "Cannot find 'add to list' btn",
+                        10
+        );
     }
+
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds)
     {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
@@ -310,4 +358,23 @@ public void testToAssertElementHasText() {
         action.press(x, start_y).waitAction(timeOfSwipe).moveTo(x, end_y).release().perform();
     }
 
+    protected void swipeUpQuick()
+    {
+        swipeUp(200);
+    }
+
+    protected void swipeUpToFindElement(By by, String error_message, int max_swipes)
+    {
+//        driver.findElements(by);
+//        driver.findElements(by).size(); //will find amount of elements found in findElements();
+        int already_swiped = 0;
+        while (driver.findElements(by).size() == 0) {
+            if (already_swiped > max_swipes) {
+                waitForElementPresent(by, "Cannot find element by swiping up. \n" + error_message, 0);
+                return;
+            }
+            swipeUpQuick();
+            ++already_swiped;
+        }
+    }
 }
