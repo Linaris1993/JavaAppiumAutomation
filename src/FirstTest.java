@@ -6,6 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.util.List;
 import java.awt.*;
 import java.awt.font.TextAttribute;
 import java.net.URL;
@@ -261,7 +262,6 @@ public class FirstTest {
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
-
         );
         waitForElementAndClick(
                 By.xpath("//*[@text='Object-oriented programming language']"),
@@ -278,28 +278,35 @@ public class FirstTest {
                 "Cannot find btn to open article options",
                 5
         );
-//        waitForElementAndClick(
-//                By.id("org.wikipedia:id/page_save"),
-//                "Cannot find save btn",
-//                10
-//        );
         waitForElementAndClick(
-                By.xpath("//*[@text ='Add to list']"),
-                "Cannot find 'add to list' btn",
+                By.id("org.wikipedia:id/page_save"),
+                "Cannot find save btn",
                 10
         );
-        waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/text_input"),
-                "Learning Programming",
-                "cannot put text into articles folder input",
+//        waitForElementAndClick(
+//                By.xpath("//*[@text ='Add to list']"),
+//                "Cannot find 'add to list' btn",
+//                10
+//        );
+//        waitForElementAndSendKeys(
+//                By.id("org.wikipedia:id/text_input"),
+//                "Learning Programming",
+//                "cannot put text into articles folder input",
+//                5
+//        );
+//
+//        waitForElementAndClick(
+//                By.xpath("OK"),
+//                "Cannot press OK btn",
+//                5
+//        );
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot go back from Article, cannot find 'Go Back' Arrow",
                 5
         );
 
-        waitForElementAndClick(
-                By.xpath("OK"),
-                "Cannot press OK btn",
-                5
-        );
         waitForElementAndClick(
                 By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
                 "Cannot go back from Article, cannot find 'Go Back' Arrow",
@@ -311,25 +318,94 @@ public class FirstTest {
                 5
         );
         waitForElementAndClick(
-                By.xpath("//android.widget.TextView[@text='Learning']"),
+                By.id("org.wikipedia:id/item_title"),
                 "Cannot find Saved Learnings",
                 5
         );
 
         String name_of_folder = "Java (programming language)";
 
-        swipElementToTheLeft(
-                By.xpath("//*[@text='" +  name_of_folder + "']"),
+        swipeElementToTheLeft(
+                By.xpath("//*[@text='" + name_of_folder + "']"),
                 "Cannot find saved article"
         );
         waitForElementNotPresent(
-                By.xpath("//*[@text='" +  name_of_folder + "']"),
+//                By.xpath("//*[@text='" +  name_of_folder + "']"),
+                By.xpath("//*[@text='Object-oriented programming language']"),
                 "Cannot delete saved article",
                 5
         );
 
     }
 
+    @Test
+    public void AmountOfNotEmptySearch() {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+
+        String search_line = "Linkin Park Diskography";
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                search_line,
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                15
+        );
+
+        String search_result_locator = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@class='android.view.ViewGroup']";
+        waitForElementPresent(
+                By.xpath(search_result_locator),
+                "Cannot find anything by request " + search_line,
+                15
+        );
+
+        int amount_of_search_results = getAmountOfElements(
+                By.xpath(search_result_locator)
+        );
+        Assert.assertTrue(
+                "We found few results!",
+                amount_of_search_results > 0
+        );
+    }
+
+    @Test
+   public void testAmountOfEmptySearch()
+    {
+    WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+    waitForElementAndClick(
+            By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+            "Cannot find search input",
+            5
+    );
+
+String search_line = "asertyjhg";
+    waitForElementAndSendKeys(
+            By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+            search_line,
+            "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+            15
+    );
+
+String search_result_locator = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='asertyjhg']";
+String empty_result_label = "//*[@text='No results']";
+
+    waitForElementPresent(
+            By.xpath(empty_result_label),
+            "Cannot find empty result label by the request" + search_line,
+            15
+    );
+    assertElementNotPresent(
+            By.xpath(search_result_locator),
+            "We found some results by request " + search_line
+    );
+}
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.until(ExpectedConditions.textToBePresentInElement(by, "Search Wikipedia"));
@@ -417,7 +493,7 @@ public class FirstTest {
         }
     }
 
-    protected void swipElementToTheLeft(By by, String error_message) {
+    protected void swipeElementToTheLeft(By by, String error_message) {
         WebElement element = waitForElementPresent(
                 by,
                 error_message,
@@ -431,11 +507,25 @@ public class FirstTest {
 
         TouchAction action = new TouchAction(driver);
         action
-                .press(right_x, middle_y)
+                .press(right_x - 10, middle_y)
                 .waitAction(300)
-                .moveTo(left_x, middle_y)
+                .moveTo(left_x + 10, middle_y)
                 .release()
                 .perform();
     }
+
+    private int getAmountOfElements(By by) {
+        List elements = driver.findElements(by);
+        return elements.size();
     }
+
+    private void assertElementNotPresent(By by, String error_message)
+    {
+    int amount_of_elements = getAmountOfElements(by);
+    if (amount_of_elements > 0) {
+        String default_message = "An element " + by.toString() + " supposed to be not present";
+    throw new AssertionError(default_message + " " + error_message);
+    }
+    }
+}
 
