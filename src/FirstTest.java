@@ -517,7 +517,7 @@ String empty_result_label = "//*[@text='No results']";
         waitForElementAndSendKeys(
                 By.xpath("//*[contains(@text,'Search Wikipedia')]"),
                 search_line,
-                "'Mobile Country Code' topic searching by 'Mobile'",
+                "Cannot find any topic by searching 'Mobile'",
                 15
         );
 
