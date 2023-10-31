@@ -326,12 +326,13 @@ public class FirstTest {
         String name_of_folder = "Java (programming language)";
 
         swipeElementToTheLeft(
-                By.xpath("//*[@text='" + name_of_folder + "']"),
+                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']"),
+                //By.xpath("//*[@text='Java (programming language)']"),
                 "Cannot find saved article"
         );
         waitForElementNotPresent(
-//                By.xpath("//*[@text='" +  name_of_folder + "']"),
-                By.xpath("//*[@text='Object-oriented programming language']"),
+                By.xpath("//*[@text='Java (programming language)']"),
+                //By.xpath("//*[@text='Object-oriented programming language']"),
                 "Cannot delete saved article",
                 5
         );
@@ -497,7 +498,7 @@ String empty_result_label = "//*[@text='No results']";
         WebElement element = waitForElementPresent(
                 by,
                 error_message,
-                10);
+                15);
 
         int left_x = element.getLocation().getX();
         int right_x = left_x + element.getSize().getWidth();
@@ -508,7 +509,7 @@ String empty_result_label = "//*[@text='No results']";
         TouchAction action = new TouchAction(driver);
         action
                 .press(right_x, middle_y)
-                .waitAction(300)
+                .waitAction(400)
                 .moveTo(left_x, middle_y)
                 .release()
                 .perform();
