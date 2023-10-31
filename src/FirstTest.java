@@ -501,6 +501,41 @@ String empty_result_label = "//*[@text='No results']";
         );
     }
 
+    @Test
+    public void testCheckIfArticleHasTitle()
+    {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        waitForElementAndClick(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                "Cannot find search input",
+                5
+        );
+
+        String search_line = "Mobile";
+        waitForElementAndSendKeys(
+                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                search_line,
+                "'Mobile Country Code' topic searching by 'Mobile'",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Mobile country code']"),
+                "Cannot find 'Mobile country code' topic searching by 'Mobile'",
+                15
+        );
+
+        assertElementPresent(
+                By.xpath("//android.view.View[@content-desc='Mobile country code']"),
+                "Title for " + search_line + " is not present"
+        );
+
+
+
+    }
+
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.until(ExpectedConditions.textToBePresentInElement(by, "Search Wikipedia"));
@@ -620,7 +655,16 @@ String empty_result_label = "//*[@text='No results']";
     if (amount_of_elements > 0) {
         String default_message = "An element " + by.toString() + " supposed to be not present";
     throw new AssertionError(default_message + " " + error_message);
+        }
     }
+
+    private void assertElementPresent(By by, String error_message)
+    {
+        int amount_of_elements = getAmountOfElements(by);
+        if (amount_of_elements <= 0) {
+            String default_message = "Title " + by.toString() + " is not present";
+        throw new AssertionError(default_message + " " + error_message);
+        }
     }
 
     private String waitForElementAndGetAttribute(By by, String attribute, String error_message, long timeoutInSeconds)
