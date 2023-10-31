@@ -507,9 +507,9 @@ String empty_result_label = "//*[@text='No results']";
 
         TouchAction action = new TouchAction(driver);
         action
-                .press(right_x - 10, middle_y)
+                .press(right_x, middle_y)
                 .waitAction(300)
-                .moveTo(left_x + 10, middle_y)
+                .moveTo(left_x, middle_y)
                 .release()
                 .perform();
     }
