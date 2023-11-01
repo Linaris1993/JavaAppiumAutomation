@@ -281,23 +281,23 @@ public class FirstTest {
                 "Cannot find save btn",
                 10
         );
-//        waitForElementAndClick(
-//                By.xpath("//*[@text ='Add to list']"),
-//                "Cannot find 'add to list' btn",
-//                10
-//        );
-//        waitForElementAndSendKeys(
-//                By.id("org.wikipedia:id/text_input"),
-//                "Learning Programming",
-//                "cannot put text into articles folder input",
-//                5
-//        );
-//
-//        waitForElementAndClick(
-//                By.xpath("OK"),
-//                "Cannot press OK btn",
-//                5
-//        );
+        waitForElementAndClick(
+                By.xpath("//*[@text ='Add to list']"),
+                "Cannot find 'add to list' btn",
+                15
+        );
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/text_input"),
+                "Learning Programming",
+                "cannot put text into articles folder input",
+                5
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='OK']"),
+                "Cannot press OK btn",
+                5
+        );
 
         waitForElementAndClick(
                 By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
@@ -315,22 +315,22 @@ public class FirstTest {
                 "Cannot find navigation button to 'My List'",
                 5
         );
+        swipeUp(2000);
+
         waitForElementAndClick(
-                By.id("org.wikipedia:id/item_title"),
+                By.xpath("//*[@text='Learning Programming']"),
                 "Cannot find Saved Learnings",
-                5
+                10
         );
 
         String name_of_folder = "Java (programming language)";
 
         swipeElementToTheLeft(
-                By.xpath("//*[@resource-id='org.wikipedia:id/page_list_item_container']"),
-                //By.xpath("//*[@text='Java (programming language)']"),
+                By.id("org.wikipedia:id/page_list_item_container"),
                 "Cannot find saved article"
         );
         waitForElementNotPresent(
                 By.xpath("//*[@text='Java (programming language)']"),
-                //By.xpath("//*[@text='Object-oriented programming language']"),
                 "Cannot delete saved article",
                 5
         );
@@ -531,9 +531,6 @@ String empty_result_label = "//*[@text='No results']";
                 By.xpath("//android.view.View[@content-desc='Mobile country code']"),
                 "Title for " + search_line + " is not present"
         );
-
-
-
     }
 
     private WebElement assertElementHasText(By by, String error_message, long timeoutInSeconds) {
