@@ -50,16 +50,15 @@ public class FirstTest {
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
-
         );
 //        WebElement element_to_init_search = waitForElementPresent(
 //                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
@@ -81,16 +80,15 @@ public class FirstTest {
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
-                "Cannot find 'Search Wikipedia' input",
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
+                "Cannot find search input",
                 5
         );
-
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                10
+                15
         );
 
         waitForElementAndClear(
@@ -118,16 +116,15 @@ public class FirstTest {
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
-
         );
 
         waitForElementAndClick(
@@ -169,13 +166,13 @@ public class FirstTest {
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.id("org.wikipedia:id/search_container"),
-                "Cannot find 'Search Wikipedia' input",
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
+                "Cannot find search input",
                 5
         );
 
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "apple",
                 "Cannot find any article for 'apple'",
                 10
@@ -213,16 +210,15 @@ public class FirstTest {
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "Appium",
                 "Cannot find 'Appium' topic searching by 'Java'",
                 15
-
         );
 
         waitForElementAndClick(
@@ -236,7 +232,7 @@ public class FirstTest {
                 15
         );
 
-        swipeUp(2000);
+        swipeUpQuick();
 
         swipeUpToFindElement(
                 By.xpath("//android.view.View[@content-desc='View article in browser']"),
@@ -251,12 +247,12 @@ public class FirstTest {
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
@@ -326,7 +322,7 @@ public class FirstTest {
         String name_of_folder = "Java (programming language)";
 
         swipeElementToTheLeft(
-                By.id("org.wikipedia:id/page_list_item_container"),
+                By.xpath("//*[@text='Java (programming language)']"),
                 "Cannot find saved article"
         );
         waitForElementNotPresent(
@@ -342,15 +338,16 @@ public class FirstTest {
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
+
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
 
         String search_line = "Linkin Park Diskography";
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 search_line,
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
@@ -378,15 +375,15 @@ public class FirstTest {
     WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
-    waitForElementAndClick(
-            By.xpath("//*[contains(@text,'Search Wikipedia')]"),
-            "Cannot find search input",
-            5
-    );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
+                "Cannot find search input",
+                5
+        );
 
 String search_line = "asertyjhg";
     waitForElementAndSendKeys(
-            By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+            By.id("org.wikipedia:id/search_plate"),
             search_line,
             "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
             15
@@ -413,14 +410,14 @@ String empty_result_label = "//*[@text='No results']";
     skipLanguage.click();
 
     waitForElementAndClick(
-            By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+            By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
             "Cannot find search input",
             5
     );
 
     String search_line = "Java";
     waitForElementAndSendKeys(
-            By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+            By.id("org.wikipedia:id/search_plate"),
             search_line,
             "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
             15
@@ -477,12 +474,12 @@ String empty_result_label = "//*[@text='No results']";
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 "Java",
                 "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
                 15
@@ -508,14 +505,14 @@ String empty_result_label = "//*[@text='No results']";
         skipLanguage.click();
 
         waitForElementAndClick(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
                 "Cannot find search input",
                 5
         );
 
         String search_line = "Mobile";
         waitForElementAndSendKeys(
-                By.xpath("//*[contains(@text,'Search Wikipedia')]"),
+                By.id("org.wikipedia:id/search_plate"),
                 search_line,
                 "Cannot find any topic by searching 'Mobile'",
                 15
@@ -624,7 +621,8 @@ String empty_result_label = "//*[@text='No results']";
         WebElement element = waitForElementPresent(
                 by,
                 error_message,
-                15);
+                15
+        );
 
         int left_x = element.getLocation().getX();
         int right_x = left_x + element.getSize().getWidth();
@@ -634,9 +632,9 @@ String empty_result_label = "//*[@text='No results']";
 
         TouchAction action = new TouchAction(driver);
         action
-                .press(right_x, middle_y)
+                .press(right_x - 10, middle_y)
                 .waitAction(400)
-                .moveTo(left_x, middle_y)
+                .moveTo(left_x + 10, middle_y)
                 .release()
                 .perform();
     }
