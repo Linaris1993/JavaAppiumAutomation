@@ -472,9 +472,9 @@ String empty_result_label = "//*[@text='No results']";
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
-        waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
-                "Cannot find search input",
+        waitForElementAndCl"//android.widget.ImageView[@content-desc='Search Wikipedia']"),
+                ick(
+                        By.xpath("Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
@@ -495,6 +495,7 @@ String empty_result_label = "//*[@text='No results']";
                 "Cannot find article after returning from background",
                 15
         );
+
     }
 
     @Test
@@ -526,6 +527,155 @@ String empty_result_label = "//*[@text='No results']";
         assertElementPresent(
                 By.xpath("//android.view.View[@content-desc='Mobile country code']"),
                 "Title for " + search_line + " is not present"
+        );
+    }
+
+    @Test
+    public void SavingTwoArticlesAndRemovingOne()
+    {
+        WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+
+        String ArticleOne = "Java";
+        String ArticleTwo = "Appium";
+
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
+                "Cannot find search input",
+                5
+        );
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_plate"),
+                ArticleOne,
+                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
+                15
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@text='Object-oriented programming language']"),
+                "Cannot find 'Object-oriented programming language' topic searching by " + ArticleOne,
+                15
+        );
+        waitForElementPresent(
+                By.xpath("//android.view.View[@content-desc='Java (programming language)']"),
+                "Cannot find Java article",
+                15
+        );
+        waitForElementPresent(
+                By.id("org.wikipedia:id/page_toolbar_button_show_overflow_menu"),
+                "Cannot find btn to open article options",
+                5
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/page_save"),
+                "Cannot find save btn",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot go back from Article, cannot find 'Go Back' Arrow",
+                5
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_close_btn"),
+                "Cannot find X Cancel search input",
+                10
+        );
+
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/search_src_text"),
+                "Cannot find search input",
+                10
+        );
+        waitForElementAndSendKeys(
+                By.id("org.wikipedia:id/search_plate"),
+                ArticleTwo,
+                "Cannot find 'Appium' topic searching by " + ArticleTwo,
+                15
+        );
+        waitForElementAndClick(
+                By.xpath("//*[@text='Automation for Apps']"),
+                "Cannot find 'Automation for Apps' topic searching by " + ArticleTwo,
+                15
+        );
+        waitForElementPresent(
+                By.id("pcs-edit-section-title-description"),
+                "Cannot find " + ArticleTwo,
+                15
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/page_save"),
+                "Cannot find save btn",
+                10
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot go back from Article, cannot find 'Go Back' Arrow",
+                5
+        );
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
+                "Cannot go back from Article, cannot find 'Go Back' Arrow",
+                5
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/nav_tab_reading_lists"),
+                "Cannot find navigation button to 'My List'",
+                5
+        );
+        waitForElementAndClick(
+                By.id("org.wikipedia:id/item_title_container"),
+                "Cannot find navigation button to 'My List'",
+                5
+        );
+        String title_before_removingOneArticle = waitForElementAndGetAttribute(
+                By.xpath(""),
+                "text",
+                "Cannot find title of article",
+                15
+        );
+
+        waitForElementPresent(
+                By.xpath("//*t[@ext='Appium']"),
+                "Cannot find Saved articles by " + ArticleTwo,
+                15
+        );
+
+        waitForElementPresent(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot find Saved articles by " + ArticleOne,
+                15
+        );
+
+        swipeElementToTheLeft(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot find saved article"
+        );
+        waitForElementNotPresent(
+                By.xpath("//*[@text='Java (programming language)']"),
+                "Cannot delete " + ArticleOne,
+                5
+        );
+        waitForElementPresent(
+                By.xpath("//*[@text='Appium']"),
+                ArticleTwo + " is not present",
+                15
+        );
+
+        waitForElementAndClick(
+                By.xpath("//*[@text='Appium']"),
+                ArticleTwo + " is not present",
+                10
+        );
+        String title_after_removingOneArticle = waitForElementAndGetAttribute(
+                By.xpath(""),
+                "text",
+                "Cannot find title of article",
+                15
+        );
+        Assert.assertEquals(
+                "Article is different, you probably removed wrong article",
+                title_before_removingOneArticle,
+                title_after_removingOneArticle
         );
     }
 
