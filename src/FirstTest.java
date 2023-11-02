@@ -472,9 +472,9 @@ String empty_result_label = "//*[@text='No results']";
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
-        waitForElementAndCl"//android.widget.ImageView[@content-desc='Search Wikipedia']"),
-                ick(
-                        By.xpath("Cannot find search input",
+        waitForElementAndClick(
+                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
+               "Cannot find search input",
                 5
         );
         waitForElementAndSendKeys(
@@ -628,14 +628,14 @@ String empty_result_label = "//*[@text='No results']";
                 5
         );
         String title_before_removingOneArticle = waitForElementAndGetAttribute(
-                By.xpath(""),
+                By.xpath("//android.widget.TextView[@text='Appium']"),
                 "text",
                 "Cannot find title of article",
                 15
         );
 
         waitForElementPresent(
-                By.xpath("//*t[@ext='Appium']"),
+                By.xpath("//*[@text='Appium']"),
                 "Cannot find Saved articles by " + ArticleTwo,
                 15
         );
@@ -667,8 +667,8 @@ String empty_result_label = "//*[@text='No results']";
                 10
         );
         String title_after_removingOneArticle = waitForElementAndGetAttribute(
-                By.xpath(""),
-                "text",
+                By.xpath("(//android.view.View[@content-desc='Appium'])[1]"),
+                "name",
                 "Cannot find title of article",
                 15
         );
