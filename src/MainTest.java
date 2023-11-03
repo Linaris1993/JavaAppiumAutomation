@@ -1,3 +1,4 @@
+import lib.CoreTestCase;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -37,8 +38,8 @@ public class MainTest extends CoreTestCase {
     }
 public void typeStartMessage() {
         //if you remove super - it will execute only code from here
-        super.typeStartMessage(); //super means 1st it will execute code from parent class, then whats here
-        System.out.println("Current class is MainTest");
+        //super.typeStartMessage(); //super means 1st it will execute code from parent class, then whats here
+        //System.out.println("Current class is MainTest");
 }
     @Test
     public void MyThirdTest() {
