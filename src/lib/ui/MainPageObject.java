@@ -33,11 +33,6 @@ public class MainPageObject {
         );
     }
 
-//    private WebElement waitForElementPresent(By by, String error_message)
-//    {
-//       return waitForElementPresent(by, error_message, 5);
-//    }
-
     public WebElement waitForElementAndClick(By by, String error_message, long timeoutInSeconds) {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.click();
