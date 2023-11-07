@@ -1,7 +1,5 @@
 import lib.CoreTestCase;
-import lib.ui.ArticlePageObject;
-import lib.ui.MainPageObject;
-import lib.ui.SearchPageObject;
+import lib.ui.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.openqa.selenium.By;
@@ -141,90 +139,25 @@ public class FirstTest extends CoreTestCase {
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
-                "Cannot find search input",
-                5
-        );
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_plate"),
-                "Java",
-                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                15
-        );
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[@text='Object-oriented programming language']"),
-                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                15
-        );
-        MainPageObject.waitForElementPresent(
-                By.xpath("//android.view.View[@content-desc='Java (programming language)']"),
-                "Cannot find Java article",
-                15
-        );
-        MainPageObject.waitForElementPresent(
-                By.id("org.wikipedia:id/page_toolbar_button_show_overflow_menu"),
-                "Cannot find btn to open article options",
-                5
-        );
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/page_save"),
-                "Cannot find save btn",
-                10
-        );
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[@text ='Add to list']"),
-                "Cannot find 'add to list' btn",
-                15
-        );
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/text_input"),
-                "Learning Programming",
-                "cannot put text into articles folder input",
-                5
-        );
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        SearchPageObject.typeSearchLine("Java");
+        SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[@text='OK']"),
-                "Cannot press OK btn",
-                5
-        );
+        ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject.waitForTitleElement();
+        String article_title = ArticlePageObject.getArticleTitle();
+        String name_of_folder = "Learning Programming";
+        ArticlePageObject.addArticleToMyList(name_of_folder);
+        ArticlePageObject.closeArticle();
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
-                "Cannot go back from Article, cannot find 'Go Back' Arrow",
-                5
-        );
+        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI.clickMyLists();
+        ArticlePageObject.swipeUpFunction();
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageButton[@content-desc='Navigate up']"),
-                "Cannot go back from Article, cannot find 'Go Back' Arrow",
-                5
-        );
-        MainPageObject.waitForElementAndClick(
-                By.id("org.wikipedia:id/nav_tab_reading_lists"),
-                "Cannot find navigation button to 'My List'",
-                5
-        );
-        MainPageObject.swipeUp(2000);
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//*[@text='Learning Programming']"),
-                "Cannot find Saved Learnings",
-                10
-        );
-
-        String name_of_folder = "Java (programming language)";
-        MainPageObject.swipeElementToTheLeft(
-                By.xpath("//*[@text='Java (programming language)']"),
-                "Cannot find saved article"
-        );
-        MainPageObject.waitForElementNotPresent(
-                By.xpath("//*[@text='Java (programming language)']"),
-                "Cannot delete saved article",
-                5
-        );
-
+        MyListsPageObject MyListPageObject = new MyListsPageObject(driver);
+        MyListPageObject.openFolderByName(name_of_folder);
+        MyListPageObject.swipeByArticleToDelete(article_title);
     }
 
     @Test
