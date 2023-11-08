@@ -16,7 +16,6 @@ public class MainPageObject {
     {
         this.driver = driver;
     }
-
     public WebElement waitForElementPresent(By by, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
         wait.withMessage(error_message + "\n");
@@ -37,6 +36,13 @@ public class MainPageObject {
         WebElement element = waitForElementPresent(by, error_message, timeoutInSeconds);
         element.click();
         return element;
+    }
+    public WebElement skipLanguageFunction(By by, String error_message, long timeoutInSeconds)
+    {
+        WebElement skipLanguage = waitForElementPresent(by, error_message, timeoutInSeconds);
+        //WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
+        skipLanguage.click();
+        return skipLanguage;
     }
 
     public WebElement waitForElementAndSendKeys(By by, String value, String error_message, long timeoutInSeconds) {
