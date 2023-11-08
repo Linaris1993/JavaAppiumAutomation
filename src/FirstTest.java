@@ -161,35 +161,16 @@ public class FirstTest extends CoreTestCase {
     }
 
     @Test
-    public void AmountOfNotEmptySearch() {
+    public void testAmountOfNotEmptySearch() {
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
-
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
-                "Cannot find search input",
-                5
-        );
-
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
         String search_line = "Linkin Park Diskography";
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_plate"),
-                search_line,
-                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                15
-        );
+        SearchPageObject.typeSearchLine(search_line);
+        int amount_of_search_results = SearchPageObject.getAmountOfFoundArticles();
 
-        String search_result_locator = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@class='android.view.ViewGroup']";
-        MainPageObject.waitForElementPresent(
-                By.xpath(search_result_locator),
-                "Cannot find anything by request " + search_line,
-                15
-        );
-
-        int amount_of_search_results = MainPageObject.getAmountOfElements(
-                By.xpath(search_result_locator)
-        );
         Assert.assertTrue(
                 "We found few results!",
                 amount_of_search_results > 0
@@ -201,32 +182,12 @@ public class FirstTest extends CoreTestCase {
         WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
 
-        MainPageObject.waitForElementAndClick(
-                By.xpath("//android.widget.ImageView[@content-desc='Search Wikipedia']"),
-                "Cannot find search input",
-                5
-        );
-
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
         String search_line = "asertyjhg";
-        MainPageObject.waitForElementAndSendKeys(
-                By.id("org.wikipedia:id/search_plate"),
-                search_line,
-                "Cannot find 'Object-oriented programming language' topic searching by 'Java'",
-                15
-        );
-
-        String search_result_locator = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@text='asertyjhg']";
-        String empty_result_label = "//*[@text='No results']";
-
-        MainPageObject.waitForElementPresent(
-                By.xpath(empty_result_label),
-                "Cannot find empty result label by the request" + search_line,
-                15
-        );
-        MainPageObject.assertElementNotPresent(
-                By.xpath(search_result_locator),
-                "We found some results by request " + search_line
-        );
+        SearchPageObject.typeSearchLine(search_line);
+        SearchPageObject.waitForEmptyResultsLabel();
+        SearchPageObject.assertThereIsNoResultOfSearch();
     }
 
     @Test
