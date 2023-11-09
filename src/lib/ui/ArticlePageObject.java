@@ -11,13 +11,24 @@ public class ArticlePageObject extends MainPageObject {
     OPTIONS_ADD_TO_MY_LIST = "//*[@text ='Add to list']",
     MY_LIST_NAME_INPUT = "org.wikipedia:id/text_input",
     MY_LIST_OK_BTN = "//*[@text='OK']",
-    CLOSE_ARTICLE_BTN = "//android.widget.ImageButton[@content-desc='Navigate up']";
+    CLOSE_ARTICLE_BTN = "//android.widget.ImageButton[@content-desc='Navigate up']",
+    SEARCH_ARTICLE_BY_TEXT_TPL = "//*[@text='{TEXT}']",
+    SAVE_BTN = "org.wikipedia:id/page_save",
+    ARTICLE_TITLE_TPL = "//android.view.View[@content-desc='{TITLE}']";
 
     public ArticlePageObject(AppiumDriver driver)
     {
         super(driver);
     }
+    private static String  getArticleSearchByText(String text)
+    {
+        return SEARCH_ARTICLE_BY_TEXT_TPL.replace("{TEXT}", text);
+    }
 
+    private static String getArticleTitle(String title)
+    {
+        return ARTICLE_TITLE_TPL.replace("{TITLE}", title);
+    }
     public WebElement waitForTitleElement()
     {
         return this.waitForElementPresent(By.id(TITLE), "Cannot find article title on the page", 15);
@@ -49,7 +60,7 @@ public class ArticlePageObject extends MainPageObject {
                 5
         );
         this.waitForElementAndClick(
-                By.id("org.wikipedia:id/page_save"),
+                By.id(SAVE_BTN),
                 "Cannot find save btn",
                 10
         );
@@ -83,6 +94,27 @@ public class ArticlePageObject extends MainPageObject {
                 By.xpath(CLOSE_ARTICLE_BTN),
                 "Cannot go back from Article, cannot find 'Go Back' Arrow",
                 5
+        );
+    }
+
+    public void saveArticle()
+    {
+        this.waitForElementAndClick(
+                By.id(SAVE_BTN),
+                "Cannot find save btn",
+                10
+        );
+    }
+    public void verifySavedArticles(String text) {
+        String search_result_text = getArticleSearchByText(text);
+        this.waitForElementPresent(By.xpath(search_result_text), "Cannot find saved article by text " + text, 5);
+    }
+
+    public void verifyTitleIsPresent(String title)
+    {
+        String article_title = getArticleTitle(title);
+        this.assertElementPresent(By.xpath(article_title),
+                "Title is not present"
         );
     }
 }

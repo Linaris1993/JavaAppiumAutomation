@@ -7,7 +7,7 @@ public class MyListsPageObject extends MainPageObject {
 
     public static final String
     FOLDER_BY_NAME_TPL = "//*[@text='{FOLDER_NAME}']",
-    ARTICLE_BY_TITLE_TPL = "//*[@text='{TITLE}']";
+    SAVED_ARTICLES = "org.wikipedia:id/item_title_container";
 
     private static String getFolderXPathByName(String name_of_folder)
     {
@@ -61,5 +61,13 @@ public class MyListsPageObject extends MainPageObject {
                 "Cannot find saved article"
         );
         this.waitForArticleToDisappearByTitle(article_title);
+    }
+
+    public void openSavedArticles()
+    {
+        this.waitForElementAndClick(By.id(SAVED_ARTICLES),
+        "Cannot find navigation button to 'My List'",
+        5
+        );
     }
 }

@@ -1,6 +1,7 @@
 package tests;
 
 import lib.CoreTestCase;
+import lib.ui.MainPageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
 import org.junit.Test;
@@ -46,6 +47,7 @@ public class SearchTests extends CoreTestCase {
                 amount_of_search_results > 0
         );
     }
+
     @Test
     public void testAmountOfEmptySearch() {
         NavigationUI NavigationUI = new NavigationUI(driver);
@@ -57,5 +59,30 @@ public class SearchTests extends CoreTestCase {
         SearchPageObject.typeSearchLine(search_line);
         SearchPageObject.waitForEmptyResultsLabel();
         SearchPageObject.assertThereIsNoResultOfSearch();
+    }
+
+    @Test
+    public void testCancelSearchResult() {
+        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI.skipLanguage();
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject.initSearchInput();
+        String search_line = "apple";
+        SearchPageObject.typeSearchLine(search_line);
+        SearchPageObject.verifySearchResultsIsGreaterThanOne();
+        SearchPageObject.clickCancelSearch();
+        SearchPageObject.waitForSearchResultToDisappear();
+
+    }
+
+    @Test
+    public void testToAssertElementHasText() {
+        NavigationUI NavigationUI = new NavigationUI(driver);
+        NavigationUI.skipLanguage();
+
+        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        //SearchPageObject.initSearchInput();
+        SearchPageObject.assertElementHasText();
     }
 }

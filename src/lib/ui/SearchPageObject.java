@@ -11,7 +11,8 @@ public class SearchPageObject extends MainPageObject {
     SEARCH_CANCEL_BTN = "org.wikipedia:id/search_close_btn",
     SEARCH_RESULT_ELEMENT = "//*[@resource-id='org.wikipedia:id/search_results_list']//*[@class='android.view.ViewGroup']",
     SEARCH_EMPTY_RESULT_ELEMENT = "org.wikipedia:id/results_text",
-    SEARCH_EMPTY_RESULT_LABEL = "//*[@text='No results']";
+    SEARCH_EMPTY_RESULT_LABEL = "//*[@text='No results']",
+    SEARCH_INPUT_PLACEHOLDER = "//*[@resource-id='org.wikipedia:id/search_container']//*[@class='android.widget.TextView']";
 
     public SearchPageObject(AppiumDriver driver)
     {
@@ -84,6 +85,30 @@ public class SearchPageObject extends MainPageObject {
         this.assertElementNotPresent(
                 By.xpath(SEARCH_EMPTY_RESULT_ELEMENT),
                 "We found some results"
+        );
+    }
+
+    public void verifySearchResultsIsGreaterThanOne()
+    {
+        this.assertElementLengthIsGreaterThan1(
+                By.xpath(SEARCH_RESULT_ELEMENT),
+                "cannot find any article",
+                10
+        );
+    }
+    public void waitForSearchResultToDisappear()
+    {
+        this.waitForElementNotPresent(
+                By.xpath(SEARCH_RESULT_ELEMENT),
+                "Search result is still present!",
+                10
+        );
+    }
+    public void assertElementHasText()
+    {
+        this.assertElementHasText( By.xpath(SEARCH_INPUT_PLACEHOLDER),
+                "Couldn't find an element",
+                10
         );
     }
 }

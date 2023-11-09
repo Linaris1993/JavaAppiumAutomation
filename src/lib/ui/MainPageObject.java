@@ -40,7 +40,6 @@ public class MainPageObject {
     public WebElement skipLanguageFunction(By by, String error_message, long timeoutInSeconds)
     {
         WebElement skipLanguage = waitForElementPresent(by, error_message, timeoutInSeconds);
-        //WebElement skipLanguage = driver.findElementByXPath("//*[contains(@text,'Skip')]");
         skipLanguage.click();
         return skipLanguage;
     }
