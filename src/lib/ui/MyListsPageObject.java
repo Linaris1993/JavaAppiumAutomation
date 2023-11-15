@@ -6,8 +6,8 @@ import org.openqa.selenium.By;
 public class MyListsPageObject extends MainPageObject {
 
     public static final String
-    FOLDER_BY_NAME_TPL = "//*[@text='{FOLDER_NAME}']",
-    SAVED_ARTICLES = "org.wikipedia:id/item_title_container";
+    FOLDER_BY_NAME_TPL = "xpath://*[@text='{FOLDER_NAME}']",
+    SAVED_ARTICLES = "id:org.wikipedia:id/item_title_container";
 
     private static String getFolderXPathByName(String name_of_folder)
     {
@@ -28,7 +28,7 @@ public class MyListsPageObject extends MainPageObject {
     {
         String folder_name_xpath = getFolderXPathByName(name_of_folder);
         this.waitForElementAndClick(
-                By.xpath(folder_name_xpath),
+                folder_name_xpath,
                 "Cannot find folder by name " + name_of_folder,
                 10
         );
@@ -37,7 +37,7 @@ public class MyListsPageObject extends MainPageObject {
     {
         String article_xpath = getFolderXPathByName(article_title);
         this.waitForElementPresent(
-                By.xpath(article_xpath),
+                article_xpath,
                 "Cannot find saved article is still present with title " + article_title,
                 15
         );
@@ -47,7 +47,7 @@ public class MyListsPageObject extends MainPageObject {
     {
         String article_xpath = getFolderXPathByName(article_title);
         this.waitForElementNotPresent(
-                By.xpath(article_xpath),
+                article_xpath,
                 "Saved article is still present with title " + article_title,
                 15
         );
@@ -57,7 +57,7 @@ public class MyListsPageObject extends MainPageObject {
         this.waitForArticleToAppearByTitle(article_title);
         String article_xpath = getFolderXPathByName(article_title);
         this.swipeElementToTheLeft(
-                By.xpath(article_xpath),
+                article_xpath,
                 "Cannot find saved article"
         );
         this.waitForArticleToDisappearByTitle(article_title);
@@ -65,7 +65,7 @@ public class MyListsPageObject extends MainPageObject {
 
     public void openSavedArticles()
     {
-        this.waitForElementAndClick(By.id(SAVED_ARTICLES),
+        this.waitForElementAndClick(SAVED_ARTICLES,
         "Cannot find navigation button to 'My List'",
         5
         );
