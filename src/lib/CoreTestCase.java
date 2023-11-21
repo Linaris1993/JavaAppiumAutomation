@@ -3,10 +3,14 @@ package lib;
 import io.appium.java_client.AppiumDriver;
 import junit.framework.TestCase;
 import org.openqa.selenium.ScreenOrientation;
+import java.time.Duration;
+import lib.ui.WelcomePageObject;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class CoreTestCase extends TestCase {
 
     protected AppiumDriver driver;
+
     protected Platform Platform;
     @Override
     protected void setUp() throws Exception {
@@ -34,7 +38,7 @@ public class CoreTestCase extends TestCase {
 
     protected void backgroundApp(int seconds)
     {
-        driver.runAppInBackground(seconds);
+        driver.runAppInBackground(Duration.ofSeconds(seconds));
     }
 
 }

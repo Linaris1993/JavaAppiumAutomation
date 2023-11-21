@@ -4,15 +4,21 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import io.appium.java_client.touch.WaitOptions;
+import io.appium.java_client.touch.offset.PointOption;
+import java.time.Duration;
+import lib.CoreTestCase;
 
 import java.util.List;
 import java.util.regex.Pattern;
 
-public class MainPageObject {
+public class MainPageObject{
     protected AppiumDriver driver;
+
     public MainPageObject(AppiumDriver driver)
     {
         this.driver = driver;
@@ -75,12 +81,38 @@ public class MainPageObject {
         int start_y = (int) (size.height * 0.8);
         int end_y = (int) (size.height * 0.2);
         action
-                .press(x, start_y)
-                .waitAction(timeOfSwipe)
-                .moveTo(x, end_y)
+                .press(PointOption.point(x, start_y))
+                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(timeOfSwipe)))
+                .moveTo(PointOption.point(x, end_y))
                 .release()
                 .perform();
     }
+//    public void verticalSwipeToBottom(){
+//        Dimension size = driver.manage().window().getSize();
+//        int startY = (int) (size.height * 0.70);
+//        int endY = (int) (size.height * 0.30);
+//        int centerX = size.width / 2;
+//
+//        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH,"finger");
+//        Sequence swipe = new Sequence(finger,1);
+//
+//        //Двигаем палец на начальную позицию
+//        swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
+//                PointerInput.Origin.viewport(),centerX,(int)startY));
+//        //Палец прикасается к экрану
+//        swipe.addAction(finger.createPointerDown(0));
+//
+//        //Палец двигается к конечной точке
+//        swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
+//                PointerInput.Origin.viewport(),centerX,(int)endY));
+//
+//        //Убираем палец с экрана
+//        swipe.addAction(finger.createPointerUp(0));
+//
+//        //Выполняем действия
+//        driver.perform(Arrays.asList(swipe));
+//    }
+
 
     public void swipeUpQuick() {
         swipeUp(200);
@@ -109,6 +141,14 @@ public class MainPageObject {
                 15
         );
 
+//        protected void swipeElementToLeftIOS(String locator, String error_message) {
+//        RemoteWebElement carousel = (RemoteWebElement) waitForElementPresent(
+//                locator,
+//                error_message,
+//                10);
+//        driver.executeScript("gesture: swipe", Map.of("elementId", carousel.getId(), "percentage", 50, "direction", "left"));
+//    }
+
         int left_x = element.getLocation().getX();
         int right_x = left_x + element.getSize().getWidth();
         int upper_y = element.getLocation().getY();
@@ -116,12 +156,11 @@ public class MainPageObject {
         int middle_y = (upper_y + lower_y) / 2;
 
         TouchAction action = new TouchAction(driver);
-        action
-                .press(right_x - 10, middle_y)
-                .waitAction(400)
-                .moveTo(left_x + 10, middle_y)
-                .release()
-                .perform();
+                action.press(PointOption.point(right_x, middle_y));
+                action.waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)));
+                action.moveTo(PointOption.point(left_x, middle_y));
+                action.release();
+                action.perform();
     }
 
     public int getAmountOfElements(String locator) {
