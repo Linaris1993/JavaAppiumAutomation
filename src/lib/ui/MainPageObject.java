@@ -42,23 +42,25 @@ public class MainPageObject{
     }
 
     public WebElement waitForElementAndClick(String locator, String error_message, long timeoutInSeconds) {
+        By by = this.getLocatorByString(locator);
         WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
         element.click();
         return element;
     }
     public WebElement skipLanguageFunction(String locator, String error_message, long timeoutInSeconds)
     {
+        By by = this.getLocatorByString(locator);
         WebElement skipLanguage = waitForElementPresent(locator, error_message, timeoutInSeconds);
         skipLanguage.click();
         return skipLanguage;
     }
 
     public WebElement waitForElementAndSendKeys(String locator, String value, String error_message, long timeoutInSeconds) {
-        WebElement element = waitForElementPresent(locator, error_message, timeoutInSeconds);
-        element.sendKeys(value);
-        return element;
+        By by = this.getLocatorByString(locator);
+        WebElement inputField = waitForElementPresent(locator, error_message, timeoutInSeconds);
+        inputField.sendKeys(value);
+        return inputField;
     }
-
     public boolean waitForElementNotPresent(String locator, String error_message, long timeoutInSeconds) {
         By by = this.getLocatorByString(locator);
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
