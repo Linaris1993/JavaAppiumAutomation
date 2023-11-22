@@ -156,9 +156,9 @@ public class MainPageObject{
         int middle_y = (upper_y + lower_y) / 2;
 
         TouchAction action = new TouchAction(driver);
-                action.press(PointOption.point(right_x, middle_y));
+                action.press(PointOption.point(right_x - 10, middle_y));
                 action.waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)));
-                action.moveTo(PointOption.point(left_x, middle_y));
+                action.moveTo(PointOption.point(left_x + 10, middle_y));
                 action.release();
                 action.perform();
     }
