@@ -49,7 +49,6 @@ public class ChangeAppConditionTests extends CoreTestCase {
         this.backgroundApp(2);
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
-        ArticlePageObject.closeArticle();
         SearchPageObject.waitForSearchResult("Object-oriented programming language");
 
     }

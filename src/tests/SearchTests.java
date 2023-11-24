@@ -82,7 +82,6 @@ public class SearchTests extends CoreTestCase {
         NavigationUI.skipLanguage();
 
         SearchPageObject SearchPageObject = new SearchPageObject(driver);
-        //SearchPageObject.initSearchInput();
         SearchPageObject.assertElementHasText();
     }
 }

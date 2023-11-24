@@ -18,6 +18,7 @@ public class ArticleTests extends CoreTestCase {
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
 
         ArticlePageObject ArticlePageObject = new ArticlePageObject(driver);
+        ArticlePageObject.waitForTitleElement();
         String article_title = ArticlePageObject.getArticleTitle();
 
         assertEquals(

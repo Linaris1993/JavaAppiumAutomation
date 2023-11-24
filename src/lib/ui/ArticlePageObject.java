@@ -6,7 +6,7 @@ import org.openqa.selenium.WebElement;
 
 public class ArticlePageObject extends MainPageObject {
     private static final String
-    TITLE = "id:pcs-edit-section-title-description",
+    TITLE = "xpath://*[@resource-id='pcs-edit-section-title-description']",
     FOOTER_ELEMENT = "xpath://android.view.View[@content-desc='View article in browser']",
     OPTIONS_ADD_TO_MY_LIST = "xpath://*[@text ='Add to list']",
     MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
@@ -49,7 +49,7 @@ public class ArticlePageObject extends MainPageObject {
 
     public void swipeUpFunction()
     {
-     this.swipeUp(2000);
+     this.swipeUp();
     }
 
     public void addArticleToMyList(String name_of_folder)

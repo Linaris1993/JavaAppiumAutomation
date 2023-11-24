@@ -11,7 +11,7 @@ public class Platform {
 
     private static final String PLATFORM_IOS = "ios";
     private static final String PLATFORM_ANDROID = "android";
-    private static final String Appium_URL = "http://127.0.0.1:4723/wd/hub";
+    private static final String Appium_URL = "http://127.0.0.1:4723/ ";
 
     public AppiumDriver getDriver() throws Exception
     {
@@ -40,7 +40,7 @@ public class Platform {
         capabilities.setCapability("platformName", "Android");
         capabilities.setCapability("deviceName", "AndroidTestDevice");
         capabilities.setCapability("platformVersion", "8.0");
-        capabilities.setCapability("automationName", "Appium");
+        capabilities.setCapability("automationName", "UiAutomator2");
         capabilities.setCapability("appPackage", "org.wikipedia");
         capabilities.setCapability("appActivity", ".main.MainActivity");
         capabilities.setCapability("app", "C:/Users/13477/OneDrive/Desktop/JavaAppiumAutomation/JavaAppiumAutomation/apks/org.wikipedia.apk");

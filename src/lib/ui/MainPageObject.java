@@ -1,11 +1,15 @@
 package lib.ui;
 
+import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.PointerInput;
+import org.openqa.selenium.interactions.Sequence;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import io.appium.java_client.touch.WaitOptions;
@@ -13,6 +17,7 @@ import io.appium.java_client.touch.offset.PointOption;
 import java.time.Duration;
 import lib.CoreTestCase;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Pattern;
 
@@ -76,18 +81,22 @@ public class MainPageObject{
         return element;
     }
 
-    public void swipeUp(int timeOfSwipe) {
-        TouchAction action = new TouchAction(driver);
+    public void swipeUp() {
+//        TouchAction action = new TouchAction(driver);
         Dimension size = driver.manage().window().getSize();
-        int x = size.width / 2;
-        int start_y = (int) (size.height * 0.8);
-        int end_y = (int) (size.height * 0.2);
-        action
-                .press(PointOption.point(x, start_y))
-                .waitAction(WaitOptions.waitOptions(Duration.ofMillis(timeOfSwipe)))
-                .moveTo(PointOption.point(x, end_y))
-                .release()
-                .perform();
+        int center_x = size.width / 2;
+        int start_y = (int) (size.height * 0.70);
+        int end_y = (int) (size.height * 0.30);
+
+        PointerInput finger = new PointerInput(PointerInput.Kind.TOUCH,"finger");
+        Sequence swipe = new Sequence(finger,1);
+        swipe.addAction(finger.createPointerMove(Duration.ofSeconds(0),
+        PointerInput.Origin.viewport(),center_x,(int)start_y));
+        swipe.addAction(finger.createPointerDown(0));
+        swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
+        PointerInput.Origin.viewport(),center_x,(int)end_y));
+        swipe.addAction(finger.createPointerUp(0));
+        driver.perform(Arrays.asList(swipe));
     }
 //    public void verticalSwipeToBottom(){
 //        Dimension size = driver.manage().window().getSize();
@@ -106,7 +115,7 @@ public class MainPageObject{
 //
 //        //Палец двигается к конечной точке
 //        swipe.addAction(finger.createPointerMove(Duration.ofMillis(700),
-//                PointerInput.Origin.viewport(),centerX,(int)endY));
+//        PointerInput.Origin.viewport(),centerX,(int)endY));
 //
 //        //Убираем палец с экрана
 //        swipe.addAction(finger.createPointerUp(0));
@@ -117,7 +126,7 @@ public class MainPageObject{
 
 
     public void swipeUpQuick() {
-        swipeUp(200);
+        swipeUp();
     }
 
     public void swipeUpToFindElement(String locator, String error_message, int max_swipes) {
@@ -135,34 +144,13 @@ public class MainPageObject{
         }
     }
 
-    public void swipeElementToTheLeft(String locator, String error_message)
+    protected void swipeElementToTheLeft(String locator, String error_message)
     {
-        WebElement element = waitForElementPresent(
+        RemoteWebElement carousel = (RemoteWebElement) waitForElementPresent(
                 locator,
                 error_message,
-                15
-        );
-
-//        protected void swipeElementToLeftIOS(String locator, String error_message) {
-//        RemoteWebElement carousel = (RemoteWebElement) waitForElementPresent(
-//                locator,
-//                error_message,
-//                10);
-//        driver.executeScript("gesture: swipe", Map.of("elementId", carousel.getId(), "percentage", 50, "direction", "left"));
-//    }
-
-        int left_x = element.getLocation().getX();
-        int right_x = left_x + element.getSize().getWidth();
-        int upper_y = element.getLocation().getY();
-        int lower_y = upper_y + element.getSize().getHeight();
-        int middle_y = (upper_y + lower_y) / 2;
-
-        TouchAction action = new TouchAction(driver);
-                action.press(PointOption.point(right_x - 10, middle_y));
-                action.waitAction(WaitOptions.waitOptions(Duration.ofMillis(300)));
-                action.moveTo(PointOption.point(left_x + 10, middle_y));
-                action.release();
-                action.perform();
+                10);
+        driver.executeScript("gesture: swipe", ImmutableMap.of("elementId", carousel.getId(), "percentage", 50, "direction", "left"));
     }
 
     public int getAmountOfElements(String locator) {
@@ -196,9 +184,9 @@ public class MainPageObject{
     }
     public WebElement assertElementHasText(String locator, String error_message, long timeoutInSeconds) {
         WebDriverWait wait = new WebDriverWait(driver, timeoutInSeconds);
-        wait.until(ExpectedConditions.textToBePresentInElement(By.id(locator), "Search Wikipedia"));
+        wait.until(ExpectedConditions.textToBePresentInElement(By.xpath(locator), "Search Wikipedia"));
         return wait.until(
-                ExpectedConditions.presenceOfElementLocated(By.id(locator))
+                ExpectedConditions.presenceOfElementLocated(By.xpath(locator))
         );
     }
 
