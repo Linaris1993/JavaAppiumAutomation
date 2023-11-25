@@ -36,7 +36,7 @@ public class ArticlePageObject extends MainPageObject {
     public String getArticleTitle()
     {
         WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("name");
+        return title_element.getAttribute("contentDescription");
     }
     public void swipeToFooter()
     {
