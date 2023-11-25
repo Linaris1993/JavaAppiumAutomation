@@ -7,7 +7,6 @@ public class MyListsPageObject extends MainPageObject {
 
     public static final String
     FOLDER_BY_NAME_TPL = "xpath://*[@text='{FOLDER_NAME}']",
-    FOLDER_BY_NAME = "//*[@text='Java (programming language)']",
     SAVED_ARTICLES = "id:org.wikipedia:id/item_title_container";
 
     private static String getFolderXPathByName(String name_of_folder)
