@@ -5,6 +5,7 @@ import lib.ui.ArticlePageObject;
 import lib.ui.MyListsPageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class MyListsTests extends CoreTestCase {
@@ -13,7 +14,7 @@ public class MyListsTests extends CoreTestCase {
         NavigationUI NavigationUI = new NavigationUI(driver);
         NavigationUI.skipLanguage();
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
@@ -40,7 +41,7 @@ public class MyListsTests extends CoreTestCase {
         String ArticleOne = "Java";
         String ArticleTwo = "Appium";
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine(ArticleOne);
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");

@@ -4,15 +4,17 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
 public class ArticleTests extends CoreTestCase {
     @Test
     public void testCompareArticleTitle() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
+//        NavigationUI NavigationUI = new NavigationUI(driver);
+//        NavigationUI.skipLanguage();
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
+
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
         SearchPageObject.clickByArticleWithSubstring("Object-oriented programming language");
@@ -33,7 +35,7 @@ public class ArticleTests extends CoreTestCase {
         NavigationUI NavigationUI = new NavigationUI(driver);
         NavigationUI.skipLanguage();
 
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject =SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Appium");
         SearchPageObject.clickByArticleWithSubstring("Automation for Apps");
@@ -47,7 +49,7 @@ public class ArticleTests extends CoreTestCase {
     public void testCheckIfArticleHasTitle() {
         NavigationUI NavigationUI = new NavigationUI(driver);
         NavigationUI.skipLanguage();
-        SearchPageObject SearchPageObject = new SearchPageObject(driver);
+        SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Mobile");
         SearchPageObject.clickByArticleWithSubstring("Mobile country code");
