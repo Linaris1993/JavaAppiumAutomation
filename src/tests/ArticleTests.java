@@ -4,6 +4,7 @@ import lib.CoreTestCase;
 import lib.ui.ArticlePageObject;
 import lib.ui.NavigationUI;
 import lib.ui.SearchPageObject;
+import lib.ui.android.AndroidSearchPageObject;
 import lib.ui.factories.SearchPageObjectFactory;
 import org.junit.Test;
 
