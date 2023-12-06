@@ -10,9 +10,6 @@ import org.junit.Test;
 public class SearchTests extends CoreTestCase {
     @Test
     public void testSearch() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -21,9 +18,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testCancelSearch() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject =SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");
@@ -34,9 +28,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfNotEmptySearch() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "Linkin Park Diskography";
@@ -51,9 +42,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testAmountOfEmptySearch() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "asertyjhg";
@@ -64,9 +52,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testCancelSearchResult() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         String search_line = "apple";
@@ -79,9 +64,6 @@ public class SearchTests extends CoreTestCase {
 
     @Test
     public void testToAssertElementHasText() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.assertElementHasText();
     }

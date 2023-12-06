@@ -1,22 +1,22 @@
 package lib.ui;
 
 import io.appium.java_client.AppiumDriver;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import lib.Platform;
 
-public class ArticlePageObject extends MainPageObject {
-    private static final String
-    TITLE = "xpath://*[@resource-id='pcs-edit-section-title-description']",
-    FOOTER_ELEMENT = "xpath://lib.ui.android.view.View[@content-desc='View article in browser']",
-    OPTIONS_ADD_TO_MY_LIST = "xpath://*[@text ='Add to list']",
-    MY_LIST_NAME_INPUT = "id:org.wikipedia:id/text_input",
-    MY_LIST_OK_BTN = "xpath://*[@text='OK']",
-    CLOSE_ARTICLE_BTN = "xpath://lib.ui.android.widget.ImageButton[@content-desc='Navigate up']",
-    SEARCH_ARTICLE_BY_TEXT_TPL = "xpath://*[@text='{TEXT}']",
-    SAVE_BTN = "id:org.wikipedia:id/page_save",
-    ARTICLE_TITLE_TPL = "xpath://lib.ui.android.view.View[@content-desc='{TITLE}']";
+abstract public class ArticlePageObject extends MainPageObject {
+    protected static String
+    TITLE,
+    FOOTER_ELEMENT,
+    OPTIONS_ADD_TO_MY_LIST,
+    MY_LIST_NAME_INPUT,
+    MY_LIST_OK_BTN,
+    CLOSE_ARTICLE_BTN,
+    SEARCH_ARTICLE_BY_TEXT_TPL,
+    SAVE_BTN,
+    ARTICLE_TITLE_TPL;
 
-    public ArticlePageObject(AppiumDriver driver)
+    public ArticlePageObject (AppiumDriver driver)
     {
         super(driver);
     }
@@ -36,15 +36,27 @@ public class ArticlePageObject extends MainPageObject {
     public String getArticleTitle()
     {
         WebElement title_element = waitForTitleElement();
-        return title_element.getAttribute("contentDescription");
+        if (Platform.getInstance().isAndroid()) {
+            return title_element.getAttribute("contentDescription");
+        } else {
+         return    title_element.getAttribute("name");
+        }
     }
     public void swipeToFooter()
     {
-        this.swipeUpToFindElement(
-                FOOTER_ELEMENT,
-                "Cannot find the end of the article",
-                20
-        );
+        if (Platform.getInstance().isAndroid()) {
+            this.swipeUpToFindElement(
+                    FOOTER_ELEMENT,
+                    "Cannot find the end of the article",
+                    40
+            );
+        } else {
+            this.swipeUpTillElementAppear(
+                    FOOTER_ELEMENT,
+                    "Cannot find the end of the article",
+            40
+            );
+        }
     }
 
     public void swipeUpFunction()
