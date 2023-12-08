@@ -1,12 +1,12 @@
 package lib.ui;
 
+import com.gargoylesoftware.htmlunit.javascript.host.Touch;
 import com.google.common.collect.ImmutableMap;
 import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.TouchAction;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.Platform;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.PointerInput;
 import org.openqa.selenium.interactions.Sequence;
@@ -17,6 +17,7 @@ import io.appium.java_client.touch.WaitOptions;
 import io.appium.java_client.touch.offset.PointOption;
 import java.time.Duration;
 import lib.CoreTestCase;
+import lib.Platform;
 
 import java.util.Arrays;
 import java.util.List;
@@ -173,12 +174,51 @@ public class MainPageObject{
         driver.executeScript("gesture: swipe", ImmutableMap.of("elementId", carousel.getId(), "percentage", 50, "direction", "left"));
     }
 
-    public int getAmountOfElements(String locator) {
-        By by = this.getLocatorByString(locator);
-        List elements = driver.findElements(by);
-        return elements.size();
-    }
+    public void clickElementToTheRightUpperCorner(String locator, String error_message) {
+        WebElement element = this.waitForElementPresent(locator + "/..", error_message, 5); //going to parent element from locator
+        int right_x = element.getLocation().getX();
+        int upper_y = element.getLocation().getY();
+        int lower_y = upper_y + element.getSize().getHeight();
+        int middle_y = (upper_y + lower_y) / 2;
+        int width = element.getSize().getWidth();
 
+        int point_to_click_x = (right_x + width) - 3;
+        int point_to_click_y = middle_y;
+
+        TouchAction action = new TouchAction(driver);
+       // action.tap(point_to_click_x, point_to_click_y).perform();
+    }
+    //another way of swiping to the left
+//    protected void swipeElementToTheLeft(String locator, String error_message) {
+//        WebElement element = waitForElementPresent(
+//                locator,
+//                error_message,
+//                10);
+//        int left_x = element.getLocation().getX();
+//        int right_x = left_x + element.getSize().getWidth();
+//        int upper_y = element.getLocation().getY();
+//        int lower_y = upper_y + element.getSize().getHeight();
+//        int middle_y = (upper_y + lower_y) / 2;
+//
+//        TouchAction action = new TouchAction(driver);
+//        action.press(right_x, middle_y);
+//        action.waitAction(300);
+//
+//        if (Platform.getInstance().isAndroid()) {
+//            action.moveTo(left_x, middle_y);
+//        } else {
+//           int offset_x = (-1 * element.getSize().getWidth());
+//           action.moveTo(offset_x, 0);
+//        }
+//        action.release();
+//        action.perform();
+//    }
+
+        public int getAmountOfElements (String locator){
+            By by = this.getLocatorByString(locator);
+            List elements = driver.findElements(by);
+            return elements.size();
+        }
     public void assertElementNotPresent(String locator, String error_message)
     {
         int amount_of_elements = getAmountOfElements(locator);

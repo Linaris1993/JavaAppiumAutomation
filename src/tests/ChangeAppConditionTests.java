@@ -11,8 +11,6 @@ import org.junit.Test;
 public class ChangeAppConditionTests extends CoreTestCase {
     @Test
     public void testChangeScreenOrientationOnSearchResults() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
 
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
@@ -40,9 +38,6 @@ public class ChangeAppConditionTests extends CoreTestCase {
     }
     @Test
     public void testCheckSearchArticleAndBackground() {
-        NavigationUI NavigationUI = new NavigationUI(driver);
-        NavigationUI.skipLanguage();
-
         SearchPageObject SearchPageObject = SearchPageObjectFactory.get(driver);
         SearchPageObject.initSearchInput();
         SearchPageObject.typeSearchLine("Java");

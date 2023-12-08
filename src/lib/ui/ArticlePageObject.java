@@ -103,6 +103,9 @@ abstract public class ArticlePageObject extends MainPageObject {
                 5
         );
     }
+    public void addArticleToMySaved() {
+        this.waitForElementAndClick(OPTIONS_ADD_TO_MY_LIST, "Cannot find option to add article to reading list", 5);
+    }
 
     public void saveArticle()
     {
@@ -124,4 +127,5 @@ abstract public class ArticlePageObject extends MainPageObject {
                 "Title is not present"
         );
     }
+
 }
