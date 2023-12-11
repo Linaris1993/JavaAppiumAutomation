@@ -2,43 +2,53 @@ package lib;
 
 import io.appium.java_client.AppiumDriver;
 import junit.framework.TestCase;
+import lib.ui.NavigationUI;
+import lib.ui.factories.NavigationUIFactory;
 import org.openqa.selenium.ScreenOrientation;
 import java.time.Duration;
 import lib.ui.WelcomePageObject;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class CoreTestCase extends TestCase {
 
     protected AppiumDriver driver;
 
-    protected Platform Platform;
     @Override
     protected void setUp() throws Exception {
         super.setUp();
-        this.Platform = new Platform();
-        driver = this.Platform.getDriver();
+        driver = Platform.getInstance().getDriver();
         this.rotateScreenPortrait();
+        this.skipWelcomePage();
     }
+
     @Override
-    protected void tearDown() throws Exception
-    {
+    protected void tearDown() throws Exception {
         driver.quit();
         super.tearDown();
     }
 
-    protected void rotateScreenPortrait()
-    {
+    protected void rotateScreenPortrait() {
         driver.rotate(ScreenOrientation.PORTRAIT);
     }
 
-    protected void rotateScreenLandscape()
-    {
+    protected void rotateScreenLandscape() {
         driver.rotate(ScreenOrientation.LANDSCAPE);
     }
 
-    protected void backgroundApp(int seconds)
-    {
+    protected void backgroundApp(int seconds) {
         driver.runAppInBackground(Duration.ofSeconds(seconds));
     }
 
+    private void skipWelcomePage() {
+        if (Platform.getInstance().isIOS()) {
+            WelcomePageObject WelcomePageObject = new WelcomePageObject(driver);
+            WelcomePageObject.clickSkip();
+        }
+        else {
+            NavigationUI NavigationUI = NavigationUIFactory.get(driver);
+            NavigationUI.skipLanguage();
+            {
+
+            }
+        }
+    }
 }

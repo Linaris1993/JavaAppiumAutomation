@@ -1,20 +1,18 @@
 package lib.ui;
-
 import io.appium.java_client.AppiumDriver;
 import org.openqa.selenium.By;
 
-public class SearchPageObject extends MainPageObject {
-    private static final String
-    SEARCH_INIT_ELEMENT = "xpath://android.widget.ImageView[@content-desc='Search Wikipedia']",
-    SEARCH_INPUT = "id:org.wikipedia:id/search_src_text",
-    SEARCH_RESULT_BY_SUBSTRING_TPL = "xpath://*[@text='{SUBSTRING}']",
-    SEARCH_CANCEL_BTN = "id:org.wikipedia:id/search_close_btn",
-    SEARCH_RESULT_ELEMENT = "xpath://*[@resource-id='org.wikipedia:id/search_results_list']//*[@class='android.view.ViewGroup']",
-    SEARCH_EMPTY_RESULT_ELEMENT = "id:org.wikipedia:id/results_text",
-    SEARCH_EMPTY_RESULT_LABEL = "xpath://*[@text='No results']",
-
-    SEARCH_RESULT_LIST = "xpath://android.widget.TextView[@resource-id='org.wikipedia:id/page_list_item_title']",
-    SEARCH_INPUT_PLACEHOLDER = "//*[@resource-id='org.wikipedia:id/search_container']//*[@class='android.widget.TextView']";
+abstract public class SearchPageObject extends MainPageObject {
+    protected static String
+    SEARCH_INIT_ELEMENT,
+    SEARCH_INPUT,
+    SEARCH_RESULT_BY_SUBSTRING_TPL,
+    SEARCH_CANCEL_BTN,
+    SEARCH_RESULT_ELEMENT,
+    SEARCH_EMPTY_RESULT_ELEMENT,
+    SEARCH_EMPTY_RESULT_LABEL,
+    SEARCH_RESULT_LIST,
+    SEARCH_INPUT_PLACEHOLDER;
 
     public SearchPageObject(AppiumDriver driver)
     {
